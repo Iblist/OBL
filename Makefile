@@ -1,4 +1,4 @@
 CC = clang
 
 all:
-	$(CC) src/*.c -Iinclude -pthread -o bin/run
+	$(CC) src/*.c -Iinclude -pthread -g -o bin/run

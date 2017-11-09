@@ -117,23 +117,31 @@ void push(void * person, int sex, listHead * list)
 /*
 This function removes a person from a list
 */
-void removePerson(void * person, int sex, listHead * list)
+void removePerson(void * tgt, void * prev, int sex)
 {
-
+	if(sex == 0)
+	{
+		((female*)prev)->next = ((female*)tgt)->next;
+		killPerson(tgt);
+	}
+	else
+	{
+		puts("hi");
+		((male*)prev)->next = ((male*)tgt)->next;
+		killPerson(tgt);
+	}
 }
 
 /*
 Swaps person from one linked list to another
 */
+//This solution loops through the entire list, a better way may be to just send the previous item in the list
 void swap(int tgtID, int sex, listHead * srcList, listHead * destList)
 {
 	int notDone = 1;
 	
 	fTracer fSearch;
 	mTracer mSearch;
-	
-	female * fList = NULL;
-	male * mList = NULL;
 	
 	void * person;
 	
@@ -173,8 +181,11 @@ void swap(int tgtID, int sex, listHead * srcList, listHead * destList)
 				}
 			}
 			fSearch.next = &destList->fListHead;
+			//Prepend extracted person to output list
+			((female*)person)->next = *fSearch.next;
+			*fSearch.next = (female*)person;
 			//Now we simply append the extracted person to the output list
-			notDone = 1;
+			/*notDone = 1;
 			while(notDone)
 			{
 				if(*fSearch.next == NULL)
@@ -187,7 +198,7 @@ void swap(int tgtID, int sex, listHead * srcList, listHead * destList)
 				{
 					fSearch.next = &(*fSearch.next)->next;
 				}
-			}
+			}*/
 		}
 	}
 	else
@@ -220,8 +231,12 @@ void swap(int tgtID, int sex, listHead * srcList, listHead * destList)
 				}
 			}
 			mSearch.next = &destList->mListHead;
+			//Prepend extracted person to output list
+			((male*)person)->next = *mSearch.next;
+			*mSearch.next = (male*)person;
+			
 			//Now we simply append the extracted person to the output list
-			notDone = 1;
+			/*notDone = 1;
 			while(notDone)
 			{
 				if(*mSearch.next == NULL)
@@ -234,7 +249,7 @@ void swap(int tgtID, int sex, listHead * srcList, listHead * destList)
 				{
 					mSearch.next = &(*mSearch.next)->next;
 				}
-			}
+			}*/
 		}
 	}
 }

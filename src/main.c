@@ -11,6 +11,28 @@ void readList(listHead * in)
 	}
 	puts("******************");
 }
+
+void killTest(listHead * in, int ID)
+{
+	int notDone = 1;
+	male * ptr = in->mListHead;
+	while(notDone)
+	{
+		if(ptr == NULL)
+		{
+			notDone = 0;
+		}
+		else if(ptr->ID == ID)
+		{
+			removePerson(ptr->next, ptr, 1);
+			notDone = 0;
+		}
+		else
+		{
+			ptr = ptr->next;
+		}
+	}
+}
 void test()
 {
 	listHead * src = createList();
@@ -18,25 +40,11 @@ void test()
 	int i;
 	for(i = 0; i < 10; i++)
 	{
-		push(createPerson(i, (i*2+100), (i*2+1)+100, 1), 1, src);
+		push(createPerson(i, (i*2+1000000), (i*2+1)+1000000, 1), 1, src);
 	}
 	readList(src);
-	
-	swap(4, 1, src, dest);
-	swap(5, 1, src, dest);
-	swap(2, 1, src, dest);
-	
-	puts("SRC");
+	killTest(src, 3);
 	readList(src);
-	puts("DEST");
-	readList(dest);
-	
-	swap(5, 1, dest, src);
-	
-	puts("SRC");
-	readList(src);
-	puts("DEST");
-	readList(dest);
 }
 
 int main()

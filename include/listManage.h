@@ -48,6 +48,7 @@ typedef struct maleListTracer {
 //FUNCTION DEFINITIONS
 
 listHead * createList();
+void removePerson(void * tgt, void * prev, int sex);
 void killPerson(void*person);
 void * createPerson(int ID, int motherID, int fatherID, int sex);
 void push(void * person, int sex, listHead * list);
