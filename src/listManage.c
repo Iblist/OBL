@@ -54,7 +54,30 @@ void killPerson(void * person)
 	}
 }
 
+void * createPerson(female * mother, male * father, int sex)
+{
+	void * newPerson = NULL;
+	
+	if (sex == 0)
+	{
+		newPerson = malloc(sizeof(female));
+		((female*)newPerson)->mother = mother;
+		((female*)newPerson)->father = father;
+		((female*)newPerson)->age = 0;
+		((female*)newPerson)->ID = (int)newPerson;
+	}
+	else
+	{
+		newPerson = malloc(sizeof(male));
+		((male*)newPerson)->mother = mother;
+		((male*)newPerson)->father = father;
+		((male*)newPerson)->age = 0;
+		((male*)newPerson)->ID = (int)newPerson;
+	}
+	return newPerson;
+}
 /*
+^^^^^
 This function creates either a new male or female using the supplied
 mother and father IDs. 
 The 'sex' argument determines whether person is male or female.
@@ -67,7 +90,8 @@ void pointers. I think there are some benefits to memory use doing it
 this way, though it may be more computationally intensive, not sure.
 **END NOTE**
 */
-void * createPerson(int ID, int motherID, int fatherID, int sex)
+/*
+void * createPersonO(int ID, int motherID, int fatherID, int sex)
 {
 	void * newPerson = NULL;
 	
@@ -90,7 +114,7 @@ void * createPerson(int ID, int motherID, int fatherID, int sex)
 	
 	return newPerson;
 }
-
+*/
 /*
 This function adds a new person to the head of the list
 */
@@ -126,9 +150,35 @@ void removePerson(void * tgt, void * prev, int sex)
 	}
 	else
 	{
-		puts("hi");
 		((male*)prev)->next = ((male*)tgt)->next;
 		killPerson(tgt);
+	}
+}
+
+/*
+Swap person from one linked list to another
+This is a far simpler solution which relies on the
+calling function providing the proceeding member in the list
+*/
+void swapN(void * target, void * prev, listHead * destList, int sex)
+{
+	if(sex == 0)
+	{
+		if(prev != NULL)
+		{
+			((female*)prev)->next = ((female*)target)->next;
+		}
+		((female*)target)->next = destList->fListHead;
+		destList->fListHead = (female*)target;
+	}
+	else
+	{
+		if(prev != NULL)
+		{
+			((male*)prev)->next = ((male*)target)->next;
+		}
+		((male*)target)->next = destList->mListHead;
+		destList->mListHead = (male*)target;
 	}
 }
 

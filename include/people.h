@@ -30,10 +30,19 @@ typedef struct femaleQueue {
 } fQue;
 
 /*
+typedef struct pthread_male_arguments {
+	void * queue;
+	void * list;
+} m_args;
+
+typedef struct
+*/
+/*
 Arguments for pthreads
 */
 typedef struct pthread_arguments {
 	int sex;			//Sex of queue and list, 0 is female, 1 is male
+	int maxAge;
 	void * queue;
 	void * list;
 } p_args;

@@ -37,14 +37,25 @@ void test()
 {
 	listHead * src = createList();
 	listHead * dest = createList();
+	male * prev;
+	male * target;
+	
 	int i;
 	for(i = 0; i < 10; i++)
 	{
-		push(createPerson(i, (i*2+1000000), (i*2+1)+1000000, 1), 1, src);
+		push(createPerson(NULL, NULL, 1), 1, src);
 	}
 	readList(src);
-	killTest(src, 3);
+	prev = src->mListHead;
+	for(i = 0; i < 4; i++)
+	{
+		prev = prev->next;
+	}
+	target = prev->next;
+	swapN(target, prev, dest, 1);
+	//killTest(src, 3);
 	readList(src);
+	readList(dest);
 }
 
 int main()
