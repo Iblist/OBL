@@ -30,7 +30,7 @@ int simulate(listHead * list, conf * params)
 	PSEUDO CODE
 	For the male/female searching threads, we need to search through the list of males and females sequentially
 	and add elligible males/females to the relevant queue. If the queue is full, the thread should wait
-	until a space opens up in the queue. QUEUE IS CIRCULAR FIFO
+	until a space opens up in the queue.
 	
 	male thread start
 	{
@@ -63,9 +63,52 @@ int simulate(listHead * list, conf * params)
 			
 */
 
+void * maleHandler(void * arguments)
+{
+	p_args args = *(p_args*) arguments;
+	listHead * que;
+	mTracer tracer;
+	int maxAge;
+	
+	que = (listHead*) args.queue;
+	tracer.next = &(((male*)args.list)->next);
+	maxAge = args.maxAge;
+	
+	if((*tracer.next)->age < maxAge)
+	{
+		swapN(*tracer.next, NULL, que, 1);
+	}
+	else
+	{
+		removePerson((*tracer.next), NULL, 1);
+	}
+	while((*tracer.next)->next != NULL)
+	{
+		if((*tracer.next)->next->age < maxAge)
+		{
+			swapN((*tracer.next)->next, NULL, que, 1);
+		}
+		else
+		{
+			removePerson((*tracer.next)->next, (*tracer.next), 1);
+		}
+		tracer.next = &((*tracer.next)->next);
+	}
+	
+	return NULL;
+}
+
+void * femaleHandler(void * arguments)
+{
+	p_args args = *(p_args*) arguments;
+	
+	return NULL;	
+}
+
 /*
 Honestly, this should be two functions, but part of the purpose of making this is to
 learn void pointers and explicit type casting soooo...
+EDIT I'm probably just going to make two functions, the function is less ugly that way.
 */
 void *job(void * arguments)
 {
